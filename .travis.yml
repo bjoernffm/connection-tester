@@ -9,6 +9,7 @@ php:
   - nightly
 
 before_script:
+  - curl --version
   - composer install --no-interaction --prefer-source --dev
 
 script: make test

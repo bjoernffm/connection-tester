@@ -14,6 +14,7 @@ final class ConnectionTesterTest extends TestCase
             ConnectionTester::class,
             $ct
         );
+        $ct->run();
     }
 }
        
