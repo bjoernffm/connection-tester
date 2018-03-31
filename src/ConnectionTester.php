@@ -19,7 +19,7 @@ class ConnectionTester extends AbstractConnectionTester
                 ];
                 $resultMessages = [
                     'DNS address '.$host.' could not be resolved',
-                    'Took '.$ip.' milliseconds'
+                    'Took '.$took.' milliseconds'
                 ];
             } else {
                 $code = 0;
@@ -29,7 +29,7 @@ class ConnectionTester extends AbstractConnectionTester
                 ];
                 $resultMessages = [
                     'DNS address '.$host.' resolved to '.$ip,
-                    'Took '.$ip.' milliseconds'
+                    'Took '.$took.' milliseconds'
                 ];
             }
 
