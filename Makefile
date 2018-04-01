@@ -16,4 +16,3 @@ tag:
 	@echo Tagging $(TAG)
 	git add -A
 	git commit -m '$(TAG) release'
-	chag tag
