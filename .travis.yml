@@ -16,8 +16,7 @@ script:
 
 matrix:
   include: 
-    - php: hhvm
-      dist: trusty
+    - dist: trusty
   fast_finish: true
 
 after_success:
