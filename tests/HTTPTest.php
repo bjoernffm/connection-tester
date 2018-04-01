@@ -14,7 +14,7 @@ final class HTTPTest extends TestCase
         $this->assertEquals(0, $res->getCode());
 
         $this->assertEquals('https://www.google.com/', $res->getResultData()['url']);
-        $this->assertEquals('text/html; charset=UTF-8', $res->getResultData()['content_type']);
+        $this->assertStringStartsWith('text/html;', $res->getResultData()['content_type']);
         $this->assertGreaterThan($res->getResultData()['http_code'], 400);
         $this->assertEquals(0, $res->getResultData()['ssl_verify_result']);
         $this->assertEquals(0, $res->getResultData()['redirect_count']);
