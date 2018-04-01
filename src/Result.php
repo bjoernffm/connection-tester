@@ -2,7 +2,7 @@
 
 namespace ConnectionTester;
 
-class TestResult
+class Result
 {
     protected $code;
     protected $resultData;
