@@ -16,7 +16,7 @@ class HTTP implements TestInterface
     public function run()
     {
          $defaults = [
-            CURLOPT_URL => $url,
+            CURLOPT_URL => $this->url,
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_FRESH_CONNECT => 1,
             CURLOPT_SSL_VERIFYHOST => 2,
@@ -68,14 +68,14 @@ class HTTP implements TestInterface
         if (!curl_errno($ch)) {
             $code = 0;
             $resultMessages = [
-                'Request '.$url.' resulted on server '.$resultData['server']['ip'].':'.$resultData['server']['port'],
+                'Request '.$this->url.' resulted on server '.$resultData['server']['ip'].':'.$resultData['server']['port'],
                 'Took '.$resultData['time']['total'].' in total with a download speed of '.$resultData['download_speed'],
                 'Result was a document ('.$resultData['content_type'].') with a status code '.$resultData['http_code'] 
             ];
         } else {
             $code = 1;
             $resultMessages = [
-                'Request '.$url.' resulted on server '.$resultData['server']['ip'].':'.$resultData['server']['port'],
+                'Request '.$this->url.' resulted in an error',
                 'Took '.$resultData['time']['total'].' in total',
                 'Not able to get any result due to an error' 
             ];
@@ -83,10 +83,10 @@ class HTTP implements TestInterface
         curl_close($ch);
             
         $inputData = [
-            'url' => $url
+            'url' => $this->url
         ];
     
-        return new TestResult($code, $resultData, $resultMessages, $inputData);
+        return new Result($code, $resultData, $resultMessages, $inputData);
     }
 }
  
