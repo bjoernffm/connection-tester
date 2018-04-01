@@ -41,7 +41,7 @@ final class HTTPTest extends TestCase
 
         $this->assertEquals(1, $res->getCode());
 
-        $this->assertEquals('http://notavalidurl/', $res->getResultData()['url']);
+        $this->assertEquals('http://notavalidurl/', strtolower($res->getResultData()['url']));
         $this->assertNull($res->getResultData()['content_type']);
         $this->assertGreaterThanOrEqual($res->getResultData()['http_code'], 400);
         $this->assertEquals(0, $res->getResultData()['ssl_verify_result']);
