@@ -48,4 +48,3 @@ class DNSResolution implements TestInterface
         return new Result($code, $resultData, $resultMessages, $inputData);
     }
 }
- 

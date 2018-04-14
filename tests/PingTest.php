@@ -76,6 +76,4 @@ final class PingTest extends TestCase
 
         $this->assertEquals(['host' => 'notavalidurl'], $res->getInputData());
     }
-
 }
-       

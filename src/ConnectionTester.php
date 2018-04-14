@@ -19,7 +19,7 @@ class ConnectionTester
     {
         $results = [];
 
-        foreach($this->tests as $test) {
+        foreach ($this->tests as $test) {
             $results[] = $test->run();
         }
 

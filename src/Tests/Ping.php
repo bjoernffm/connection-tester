@@ -22,7 +22,7 @@ class Ping implements TestInterface
         $this->host = $host;
 
         $this->options['packets'] = (int) $this->options['packets'];
-        if($this->options['packets'] <= 0) {
+        if ($this->options['packets'] <= 0) {
             $this->options['packets'] = 1;
         }
 
@@ -67,7 +67,7 @@ class Ping implements TestInterface
             }
 
             preg_match('#(\d+) packets transmitted, (\d+) received, \d+% packet loss, time (\d+)ms#', $output[3], $results);
-            if(count($results) == 4) {
+            if (count($results) == 4) {
                 $resultData['time']['took'] = (int) $results[3];
                 $resultData['packets'] = [
                     'transmitted' => (int) $results[1],
@@ -98,4 +98,3 @@ class Ping implements TestInterface
         return new Result($code, $resultData, $resultMessages, $inputData);
     }
 }
- 

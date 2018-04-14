@@ -31,4 +31,3 @@ final class DNSResolutionTest extends TestCase
         $this->assertEquals(['host' => 'thisdoesnotexist'], $res->getInputData());
     }
 }
-       

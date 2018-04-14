@@ -6,4 +6,3 @@ interface TestInterface
 {
     public function run();
 }
- 

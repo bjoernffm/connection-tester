@@ -62,6 +62,4 @@ final class HTTPTest extends TestCase
         
         $this->assertEquals(['url' => 'notavalidurl'], $res->getInputData());
     }
-
 }
-       

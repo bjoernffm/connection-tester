@@ -26,6 +26,4 @@ final class TestResultTest extends TestCase
         $this->assertEquals(['message'], $result->getResultMessages());
         $this->assertEquals(['key' => 'value'], $result->getInputData());
     }
-
 }
-       

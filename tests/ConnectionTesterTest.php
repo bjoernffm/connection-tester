@@ -26,4 +26,3 @@ final class ConnectionTesterTest extends TestCase
         $this->assertEquals([], $res);
     }
 }
-       
