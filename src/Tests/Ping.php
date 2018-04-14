@@ -56,41 +56,39 @@ class Ping implements TestInterface
         $resultMessages = [];
 
         $start = microtime(true);
-        exec('ping -q -c '.$this->options['packets'].' -i '.$this->options['interval'].' '.$this->host, $output, $code);
+        exec('ping -q -c '.$this->options['packets'].' -i '.$this->options['interval'].' '.$this->host.' 2>&1', $output, $code);
         $resultData['time']['total'] = (int) round((microtime(true)-$start)*1000);
 
-        preg_match('#PING [\S]+ \(([\d\.]+)#', $output[0], $results);
-        if (count($results) == 2) {
-            $resultData['ip'] = $results[1];
-            $resultMessages[] = $this->host.' resolved in ip address '.$resultData['ip'];
-        } else {
+        if (count($output) == 5) {
+            preg_match('#PING [\S]+ \(([\d\.]+)#', $output[0], $results);
+            if (count($results) == 2) {
+                $resultData['ip'] = $results[1];
+                $resultMessages[] = $this->host.' resolved in ip address '.$resultData['ip'];
+            }
+
+            preg_match('#(\d+) packets transmitted, (\d+) received, \d+% packet loss, time (\d+)ms#', $output[3], $results);
+            if(count($results) == 4) {
+                $resultData['time']['took'] = (int) $results[3];
+                $resultData['packets'] = [
+                    'transmitted' => (int) $results[1],
+                    'recieved' => (int) $results[2],
+                    'lost' => (int) $results[1]-$results[2]
+                ];
+                $resultMessages[] = $results[0];
+            }
+
+            preg_match('#rtt min/avg/max/mdev = (\d+[\.\d]*)/(\d+[\.\d]*)/(\d+[\.\d]*)/(\d+[\.\d]*)#', $output[4], $results);
+            if (count($results) == 5) {
+                $resultData['round_trip_time'] = [
+                    'min' => (double) $results[1],
+                    'avg' => (double) $results[2],
+                    'max' => (double) $results[3],
+                    'mdev' => (double) $results[4]
+                ];
+                $resultMessages[] = $results[0];
+            }
+        } elseif (count($output) == 1) {
             $resultMessages[] = $this->host.' could not be resolved';
-        }
-
-        preg_match('#(\d+) packets transmitted, (\d+) received, \d+% packet loss, time (\d+)ms#', $output[count($output)-2], $results);
-        if(count($results) == 4) {
-            $resultData['time']['took'] = (int) $results[3];
-            $resultData['packets'] = [
-                'transmitted' => (int) $results[1],
-                'recieved' => (int) $results[2],
-                'lost' => (int) $results[1]-$results[2]
-            ];
-            $resultMessages[] = $results[0];
-        } else {
-            $resultMessages[] = 'No packet statistic available';
-        }
-
-        preg_match('#rtt min/avg/max/mdev = (\d+[\.\d]*)/(\d+[\.\d]*)/(\d+[\.\d]*)/(\d+[\.\d]*)#', $output[count($output)-1], $results);
-        if (count($results) == 5) {
-            $resultData['round_trip_time'] = [
-                'min' => (double) $results[1],
-                'avg' => (double) $results[2],
-                'max' => (double) $results[3],
-                'mdev' => (double) $results[4]
-            ];
-            $resultMessages[] = $results[0];
-        } else {
-            $resultMessages[] = 'No rtt information available';
         }
         
         $inputData = [
